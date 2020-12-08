@@ -37,9 +37,8 @@ def update_v_cruise(v_cruise_kph, v_ego, gas_pressed, buttonEvents, enabled, met
   global ButtonCnt, LongPressed, ButtonPrev, PrevDisable, CurrentVspeed, PrevGaspressed
   
   if enabled:
-    if ButtonCnt:
-      ButtonCnt += 1
-    for b in buttonEvents:
+    if ButtonCnt += 1
+      for b in buttonEvents:
       if b.pressed and not ButtonCnt and (b.type == ButtonType.accelCruise or
                                           b.type == ButtonType.decelCruise):
         ButtonCnt = FIRST_PRESS_TIME
