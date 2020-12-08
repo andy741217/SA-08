@@ -356,7 +356,7 @@ class Controls:
     # if stock cruise is completely disabled, then we can use our own set speed logic
     if not self.CP.enableCruise:
       if self.CP.openpilotLongitudinalControl:
-        self.v_cruise_kph = update_v_cruise(CS.vEgo, CS.buttonEvents, self.v_cruise_kph)
+        self.v_cruise_kph = update_v_cruise(CS.buttonEvents, self.enabled, self.v_cruise_kph)
       elif CS.cruiseState.enabled:
         self.v_cruise_kph = CS.cruiseState.speed * CV.MS_TO_KPH
     elif self.CP.enableCruise and CS.cruiseState.enabled:
