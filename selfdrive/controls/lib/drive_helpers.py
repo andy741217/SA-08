@@ -9,6 +9,9 @@ LongPressed = False
 PrevGaspressed = False
 
 # kph
+FIRST_PRESS_TIME = 1
+LONG_PRESS_TIME = 50
+
 V_CRUISE_MAX = 144
 V_CRUISE_MIN = 8
 V_CRUISE_DELTA = 8
