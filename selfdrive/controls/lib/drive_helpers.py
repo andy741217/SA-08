@@ -2,6 +2,12 @@ from common.numpy_fast import clip, interp
 from selfdrive.config import Conversions as CV
 from cereal import car
 
+ButtonType = car.CarState.ButtonEvent.Type
+ButtonPrev = ButtonType.unknown
+ButtonCnt = 0
+LongPressed = False
+PrevGaspressed = False
+
 # kph
 V_CRUISE_MAX = 144
 V_CRUISE_MIN = 8
@@ -37,8 +43,9 @@ def update_v_cruise(v_cruise_kph, v_ego, gas_pressed, buttonEvents, enabled, met
   global ButtonCnt, LongPressed, ButtonPrev, PrevDisable, CurrentVspeed, PrevGaspressed
   
   if enabled:
-      if ButtonCnt = 1
-      for b in buttonEvents:
+    if ButtonCnt:
+      ButtonCnt += 1
+    for b in buttonEvents:
       if b.pressed and not ButtonCnt and (b.type == ButtonType.accelCruise or
                                           b.type == ButtonType.decelCruise):
         ButtonCnt = FIRST_PRESS_TIME
