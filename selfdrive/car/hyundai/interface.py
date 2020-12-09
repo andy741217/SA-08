@@ -39,22 +39,17 @@ class CarInterface(CarInterfaceBase):
     tire_stiffness_factor = 0.685
 
     #Long tuning Params -  make individual params for cars, baseline Hyundai genesis
-    ret.longitudinalTuning.deadzoneBP = [0., 9.]
-    ret.longitudinalTuning.deadzoneV = [0., .15]
-    ret.longitudinalTuning.kpBP = [0., 5., 35.]
-    ret.longitudinalTuning.kiBP = [0., 35.]
-
-    if ret.enableGasInterceptor:
-      ret.gasMaxBP = [0., 9., 35]
-      ret.gasMaxV = [0.2, 0.5, 0.7]
-      ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
-      ret.longitudinalTuning.kiV = [0.18, 0.12]
-      
-    else:
-      ret.gasMaxBP = [0.]
-      ret.gasMaxV = [0.5]
-      ret.longitudinalTuning.kpV = [3.6, 2.4, 1.5]
-      ret.longitudinalTuning.kiV = [0.54, 0.36]
+    ret.longitudinalTuning.kpBP = [0., .3, 10., 35.]
+    ret.longitudinalTuning.kpV = [1.8, .8, .3, .3]
+    ret.longitudinalTuning.kiBP = [0., .3, 15., 35.]
+    ret.longitudinalTuning.kiV = [0.15, .055, .05, .045]
+    ret.longitudinalTuning.deadzoneBP = [0., .5]
+    ret.longitudinalTuning.deadzoneV = [0.00, 0.00]
+    ret.gasMaxBP = [0., 1., 1.1, 15., 40.]
+    ret.gasMaxV = [2., 2., 2., 1.68, 1.3]
+    ret.brakeMaxBP = [0., 5., 5.1]
+    ret.brakeMaxV = [3.5, 3.5, 3.5]  # safety limits to stop unintended deceleration
+    
        
 
     if opParams().get('Enable_INDI'):
