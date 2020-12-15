@@ -225,9 +225,9 @@ class Planner():
     
     distances, speeds, accelerations = self.parse_modelV2_data(sm)
     self.mpc_model.update(sm['carState'].vEgo, sm['carState'].aEgo,
-                          distances,
-                          speeds,
-                          accelerations)
+                          sm['model'].longitudinal.distances,
+                          sm['model'].longitudinal.speeds,
+                          sm['model'].longitudinal.accelerations)
 
     self.choose_solution(v_cruise_setpoint, enabled, sm['modelLongButton'].enabled)
 
