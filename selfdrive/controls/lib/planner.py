@@ -122,7 +122,7 @@ class Planner():
         self.a_acc = self.a_model
 
     self.v_acc_future = min(possible_futures)
-  
+
   def update(self, sm, pm, CP, VM, PP):
     """Gets called when new radarState is available"""
     cur_time = sec_since_boot()
@@ -202,7 +202,6 @@ class Planner():
 
     self.mpc1.update(pm, sm['carState'], lead_1)
     self.mpc2.update(pm, sm['carState'], lead_2)
-    distances, speeds, accelerations = self.parse_modelV2_data(sm)
     self.mpc_model.update(sm['carState'].vEgo, sm['carState'].aEgo,
                           sm['model'].longitudinal.distances,
                           sm['model'].longitudinal.speeds,
