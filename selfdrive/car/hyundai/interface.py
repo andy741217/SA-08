@@ -133,8 +133,9 @@ class CarInterface(CarInterfaceBase):
     elif candidate in [CAR.IONIQ_HEV, CAR.IONIQ_EV_LTD]:
       ret.mass = 1490. + STD_CARGO_KG
       ret.wheelbase = 2.7
-      ret.steerRatio = 13.73 * 1.15
-     
+      ret.steerRatio = 16
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.12], [0.02]]
+      ret.lateralTuning.pid.kf = 0.00005
     elif candidate == CAR.KIA_FORTE:
       ret.mass = 3558. * CV.LB_TO_KG
       ret.wheelbase = 2.80
@@ -154,12 +155,7 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 3558. * CV.LB_TO_KG # actual: 2987
       ret.wheelbase = 2.80 # actual: 2.649
       ret.steerRatio = 13.75 * 1.15
-      ret.lateralTuning.pid.kpBP = [0., 10., 30.]
-      ret.lateralTuning.pid.kpV = [0.25, 0.25, 0.25]
-      ret.lateralTuning.pid.kiBP = [0., 10., 30.]
-      ret.lateralTuning.pid.kiV = [0.05, 0.05, 0.05]
-      ret.lateralTuning.pid.kfBP = [0., 10., 30.]
-      ret.lateralTuning.pid.kfV = [0.00005, 0.00005, 0.00005]
+      
     elif candidate in [CAR.KIA_NIRO_HEV, CAR.KIA_NIRO_EV]:
       ret.steerRatio = 13.73
       ret.mass = 1737. + STD_CARGO_KG
