@@ -22,7 +22,6 @@ class CarState(CarStateBase):
     self.radar_obj_valid = 0.
     self.vrelative = 0.
     self.prev_cruise_buttons = 0
-    self.prev_gap_button = 0
     self.cancel_button_count = 0
     self.cancel_button_timer = 0
     self.leftblinkerflashdebounce = 0
@@ -97,16 +96,13 @@ class CarState(CarStateBase):
           self.cancel_button_count = 0
     else:
       self.cancel_button_count = 0
-    
-     
+      
     # cruise state
     if not self.CP.enableCruise:
       if self.cruise_buttons == 1 or self.cruise_buttons == 2:
         self.allow_nonscc_available = True
-        self.brake_check = 0
-        self.mainsw_check = 0
-      ret.cruiseState.available = self.allow_nonscc_available != 0
-      ret.cruiseState.enabled = ret.cruiseState.available
+      ret.cruiseState.available = True
+      ret.cruiseState.enabled = self.allow_nonscc_available != 0
     elif not self.CP.radarOffCan:
       ret.cruiseState.available = (cp_scc.vl["SCC11"]["MainMode_ACC"] != 0)
       ret.cruiseState.enabled = (cp_scc.vl["SCC12"]['ACCMode'] != 0)
@@ -131,8 +127,6 @@ class CarState(CarStateBase):
     ret.brake = 0
     ret.brakePressed = cp.vl["TCS13"]['DriverBraking'] != 0
     self.brakeUnavailable = cp.vl["TCS13"]['ACCEnable'] == 3
-    if ret.brakePressed:
-      self.brake_check = 1
 
     # TODO: Check this
     ret.brakeLights = bool(cp.vl["TCS13"]['BrakeLight'] or ret.brakePressed)
