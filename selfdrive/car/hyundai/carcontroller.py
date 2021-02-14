@@ -1,6 +1,6 @@
 from numpy import clip
 
-from cereal import car, messaging
+from cereal import car, log, messaging
 from selfdrive.car import apply_std_steer_torque_limits
 from selfdrive.car.hyundai.carstate import GearShifter
 from selfdrive.car.hyundai.hyundaican import create_lkas11, create_clu11, create_lfa_mfa, \
@@ -133,20 +133,12 @@ class CarController():
     elif (CS.cancel_button_count == 3) and self.cp_oplongcontrol:
       self.usestockscc = not self.usestockscc
 
-    if not self.usestockscc:
-      self.gapcount += 1
-      if self.gapcount == 50 and self.gapsettingdance == 2:
-        self.gapsettingdance = 1
-        self.gapcount = 0
-      elif self.gapcount == 50 and self.gapsettingdance == 1:
+    if self.prev_gapButton != CS.cruise_buttons:  # gap change.
+      if CS.cruise_buttons == 3:
+        self.gapsettingdance -= 1
+      if self.gapsettingdance < 1:
         self.gapsettingdance = 4
-        self.gapcount = 0
-      elif self.gapcount == 50 and self.gapsettingdance == 4:
-        self.gapsettingdance = 3
-        self.gapcount = 0
-      elif self.gapcount == 50 and self.gapsettingdance == 3:
-        self.gapsettingdance = 2
-        self.gapcount = 0
+      self.prev_gapButton = CS.cruise_buttons
         
     self.apply_steer_last = apply_steer
 
@@ -288,10 +280,16 @@ class CarController():
                                       CS.out.standstill, CS.scc11,
                                       self.usestockscc, CS.CP.radarOffCan, self.scc11cnt, self.sendaccmode))
 
-        can_sends.append(create_scc12(self.packer, apply_accel, enabled,
-                                      self.acc_standstill, CS.out.gasPressed, CS.out.brakePressed,
-                                      CS.out.stockAeb,
-                                      CS.scc12, self.usestockscc, CS.CP.radarOffCan, self.scc12cnt))
+        if CS.brake_check == 1:        
+          can_sends.append(create_scc12(self.packer, apply_accel, enabled,
+                                        self.acc_standstill, CS.out.gasPressed, 1,
+                                        CS.out.stockAeb,
+                                        CS.scc12, self.usestockscc, CS.CP.radarOffCan, self.scc12cnt))
+        else: 
+          can_sends.append(create_scc12(self.packer, apply_accel, enabled,                              
+                                        self.acc_standstill, CS.out.gasPressed, CS.out.brakePressed,
+                                        CS.out.stockAeb,
+                                        CS.scc12, self.usestockscc, CS.CP.radarOffCan, self.scc12cnt))
 
         can_sends.append(create_scc14(self.packer, enabled, self.usestockscc, CS.out.stockAeb, apply_accel,
                                       CS.scc14, self.objdiststat, CS.out.gasPressed, self.acc_standstill, CS.out.vEgo))
