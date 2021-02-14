@@ -202,7 +202,7 @@ class CarInterface(CarInterfaceBase):
                           CAR.KIA_CADENZA_HEV, CAR.GRANDEUR_HEV, CAR.KIA_NIRO_HEV, CAR.KONA_HEV]):
       ret.safetyModel = car.CarParams.SafetyModel.hyundaiCommunity
 
-    if ret.radarOffCan or (ret.sccBus == 2) or opParams().get('EnableOPwithCC'):
+    if ret.radarOffCan or (ret.sccBus == 2) or True:
       ret.safetyModel = car.CarParams.SafetyModel.hyundaiCommunityNonscc
 
     if ret.mdpsHarness or opParams().get('smartMDPS'):
@@ -222,9 +222,9 @@ class CarInterface(CarInterfaceBase):
     ret.enableCamera = is_ecu_disconnected(fingerprint[0], FINGERPRINTS, ECU_FINGERPRINT, candidate, Ecu.fwdCamera) \
                        or has_relay
 
-    ret.radarDisablePossible = opParams().get('RadarDisableEnabled')
+    ret.radarDisablePossible = False
 
-    ret.enableCruise = opParams().get('EnableOPwithCC') and ret.sccBus == 0
+    ret.enableCruise = False and ret.sccBus == 0
 
     if ret.radarDisablePossible:
       ret.openpilotLongitudinalControl = True
